@@ -1,0 +1,53 @@
+name: start dirty work
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_archive:
+    runs-on: macos-15
+
+    steps:
+    # 1. downloading target project
+    - name: download project from releases
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p target-install
+        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target.xcodeproj" --dir target-install
+
+    # 2. moving to workspace
+    - name: moving to workspace
+      run: |
+        mv target-install/target.xcodeproj ./target.xcodeproj
+
+    # 3. compiling for real iPhoneOS device (Any iOS Device)
+    - name: the DIRTIEST JOB is here
+      run: |
+        xcodebuild -project target.xcodeproj \
+                   -scheme target \
+                   -derivedDataPath build_output \
+                   -sdk iphoneos \
+                   -configuration Debug \
+                   CODE_SIGNING_ALLOWED=NO \
+                   CODE_SIGNING_REQUIRED=NO \
+                   CODE_SIGN_IDENTITY="" \
+                   build
+
+    # archiving the builded project
+    - name: archive the builded project
+      run: |
+        zip -r builded-project.zip ${{ github.workspace }}/build_output/Build/Products/Debug-iphoneos
+
+    # 5. publishing artifact
+    - name: publishing artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: BuildedProject
+        path: builded-project.zip
+
+   # 6. if everything is done, then...
+    - name: everything is done, YAAAAAY
+      run: |
+         echo EVERYTHING IS DOOOOONEEEE!
+        
