@@ -1,4 +1,4 @@
-name: start dirty work
+name: build for iPhoneOS
 
 on:
   workflow_dispatch:
@@ -13,14 +13,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        mkdir -p target-install
-        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target.xcodeproj" --dir target-install
+        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target.zip"
 
-    # 2. moving to workspace
-    - name: moving to workspace
+    # 2. unzipping the target project
+    - name: unzip process
       run: |
-        mv target-install/target.xcodeproj ./target.xcodeproj
-
+        unzip target.zip
     # 3. compiling for real iPhoneOS device (Any iOS Device)
     - name: the DIRTIEST JOB is here
       run: |
