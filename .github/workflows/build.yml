@@ -23,7 +23,7 @@ jobs:
     - name: the DIRTIEST JOB is here
       run: |
         xcodebuild -project target.xcodeproj \
-                   -scheme target \
+                   -target target \
                    -derivedDataPath build_output \
                    -sdk iphoneos \
                    -configuration Debug \
