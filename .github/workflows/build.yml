@@ -22,8 +22,9 @@ jobs:
     # 3. compiling for real iPhoneOS device (Any iOS Device)
     - name: the DIRTIEST JOB is here
       run: |
+        xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
-                   -target target \
+                   -scheme target \
                    -derivedDataPath build_output \
                    -sdk iphoneos \
                    -configuration Debug \
