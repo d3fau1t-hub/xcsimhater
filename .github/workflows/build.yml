@@ -24,7 +24,7 @@ jobs:
       run: |
         xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
-                   -scheme target \
+                   -scheme Testify \
                    -derivedDataPath build_output \
                    -sdk iphoneos \
                    -configuration Debug \
