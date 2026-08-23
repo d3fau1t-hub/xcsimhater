@@ -19,8 +19,11 @@ jobs:
     - name: unzip process
       run: |
         unzip target.zip
+        mv */target.xcodeproj ./ 2>/dev/null || true
+        mv */Testify ./ 2>/dev/null || true
+        
     # 3. compiling for real iPhoneOS device (Any iOS Device)
-    - name: the DIRTIEST JOB is here
+    - name: build process
       run: |
         xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
