@@ -26,7 +26,7 @@ jobs:
         mv */target.xcodeproj ./ 2>/dev/null || true
         mv */Your-project-name ./ 2>/dev/null || true
         
-    # 3. compiling for real iPhoneOS device (Any iOS Device)
+    # 3. compiling for real tvOS device (Any tvOS Device)
     - name: build process
       run: |
         xcodebuild -project target.xcodeproj -list
