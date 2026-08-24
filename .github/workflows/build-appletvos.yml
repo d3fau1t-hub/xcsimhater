@@ -31,7 +31,7 @@ jobs:
       run: |
         xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
-                   -scheme Gallery Plaza \
+                   -scheme "Gallery Plaza" \
                    -derivedDataPath build_output \
                    -sdk appletvos \
                    -configuration Debug \
