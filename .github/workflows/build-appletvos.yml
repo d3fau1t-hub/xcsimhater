@@ -24,14 +24,14 @@ jobs:
       run: |
         unzip target-appletvos.zip
         mv */target.xcodeproj ./ 2>/dev/null || true
-        mv */Your-project-name ./ 2>/dev/null || true
+        mv */Gallery\ Plaza ./ 2>/dev/null || true
         
     # 3. compiling for real tvOS device (Any tvOS Device)
     - name: build process
       run: |
         xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
-                   -scheme Your-project-name \
+                   -scheme Gallery Plaza \
                    -derivedDataPath build_output \
                    -sdk appletvos \
                    -configuration Debug \
