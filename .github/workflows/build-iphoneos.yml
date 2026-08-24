@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_archive:
+  iphoneos_build:
     runs-on: macos-15
 
     steps:
@@ -13,21 +13,24 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target.zip"
+        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target-iphoneos.zip"
+        if [ ! -f "target-iphoneos.zip" ]; then
+        echo brooooooo... what do you mean? You really think, that I CAN CREATE A FREE XCODEPROJ??? Nice try bro!
+        exit 1
 
     # 2. unzipping the target project
     - name: unzip process
       run: |
-        unzip target.zip
+        unzip target-iphoneos.zip
         mv */target.xcodeproj ./ 2>/dev/null || true
-        mv */Testify ./ 2>/dev/null || true
+        mv */Your-project-name ./ 2>/dev/null || true
         
     # 3. compiling for real iPhoneOS device (Any iOS Device)
     - name: build process
       run: |
         xcodebuild -project target.xcodeproj -list
         xcodebuild -project target.xcodeproj \
-                   -scheme Testify \
+                   -scheme Your-project-name \
                    -derivedDataPath build_output \
                    -sdk iphoneos \
                    -configuration Debug \
@@ -49,7 +52,7 @@ jobs:
         path: builded-project.zip
 
    # 6. if everything is done, then...
-    - name: everything is done, YAAAAAY
+    - name: Everything is done!!!
       run: |
-         echo EVERYTHING IS DOOOOONEEEE!
+         echo Congrats bro!! Everything is DONEEEE!!!!!!!
         
