@@ -13,7 +13,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target-iphoneos.zip"
+        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target-iphoneos.zip" || true
         if [ ! -f "target-iphoneos.zip" ]; then
         echo brooooooo... what do you mean? You really think, that I CAN CREATE A FREE XCODEPROJ??? Nice try bro!
         exit 1
