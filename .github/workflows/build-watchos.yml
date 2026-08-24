@@ -43,7 +43,7 @@ jobs:
     # archiving the builded project
     - name: archive the builded project
       run: |
-        zip -r builded-project.zip ${{ github.workspace }}/build_output/Build/Products/Debug-iphoneos
+        zip -r builded-project.zip ${{ github.workspace }}/build_output/Build/Products/Debug-watchos
 
     # 5. publishing artifact
     - name: publishing artifact
