@@ -17,6 +17,7 @@ jobs:
         if [ ! -f "target-iphoneos.zip" ]; then
         echo brooooooo... what do you mean? You really think, that I CAN CREATE A FREE XCODEPROJ??? Nice try bro!
         exit 1
+        fi
 
     # 2. unzipping the target project
     - name: unzip process
