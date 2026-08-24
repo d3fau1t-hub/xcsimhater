@@ -1,0 +1,59 @@
+name: build for tvOS (appletvos)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  appletvos_build:
+    runs-on: macos-15
+
+    steps:
+    # 1. downloading target project
+    - name: download project from releases
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release download 1.0.0 --repo d3fau1t-hub/xcsimhater --pattern "target-appletvos.zip" || true
+        if [ ! -f "target-appletvos.zip" ]; then
+        echo brooooooo... what do you mean? You really think, that I CAN CREATE A FREE XCODEPROJ??? Nice try bro!
+        exit 1
+        fi
+
+    # 2. unzipping the target project
+    - name: unzip process
+      run: |
+        unzip target-appletvos.zip
+        mv */target.xcodeproj ./ 2>/dev/null || true
+        mv */Your-project-name ./ 2>/dev/null || true
+        
+    # 3. compiling for real iPhoneOS device (Any iOS Device)
+    - name: build process
+      run: |
+        xcodebuild -project target.xcodeproj -list
+        xcodebuild -project target.xcodeproj \
+                   -scheme Your-project-name \
+                   -derivedDataPath build_output \
+                   -sdk appletvos \
+                   -configuration Debug \
+                   CODE_SIGNING_ALLOWED=NO \
+                   CODE_SIGNING_REQUIRED=NO \
+                   CODE_SIGN_IDENTITY="" \
+                   build
+
+    # archiving the builded project
+    - name: archive the builded project
+      run: |
+        zip -r builded-project.zip ${{ github.workspace }}/build_output/Build/Products/Debug-iphoneos
+
+    # 5. publishing artifact
+    - name: publishing artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: BuildedProject
+        path: builded-project.zip
+
+   # 6. if everything is done, then...
+    - name: Everything is done!!!
+      run: |
+         echo Congrats bro!! Everything is DONEEEE!!!!!!!
+        
